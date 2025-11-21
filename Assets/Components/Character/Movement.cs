@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -6,29 +7,34 @@ namespace Character
     public class Movement : MonoBehaviour
     {
         [SerializeField] private CharacterController _character;
+        Physics _physics;
+        
+        public float moveSpeed = 1f;
 
-        public float moveSpeed = 5f;
+        private void Start()
+        {
+            _physics = _character.GetComponent<Physics>();
+        }
 
         private void FixedUpdate()
         {
-
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
-            Vector3 moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
+            Vector3 moveDirection = (transform.forward * verticalInput) + (transform.right * horizontalInput);
 
-            moveDirection.y -= 9f * Time.fixedDeltaTime;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (_character.isGrounded)
                 {
-                    moveDirection.y += 15 * Time.fixedDeltaTime;
+                    moveDirection.y += 55;
                 }
             }
 
+            if (_physics)
+                _physics.velocity = (moveDirection * moveSpeed) * Time.fixedDeltaTime;
 
-            _character.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 
     }
