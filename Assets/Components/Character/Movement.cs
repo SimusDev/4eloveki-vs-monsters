@@ -23,7 +23,7 @@ namespace Character
             {
                 if (_character.isGrounded)
                 {
-                    moveDirection.y += 15f;
+                    moveDirection.y += 15 * Time.fixedDeltaTime;
                 }
             }
 
