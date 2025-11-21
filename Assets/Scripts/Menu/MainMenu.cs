@@ -10,18 +10,15 @@ namespace Interface
 
         private Network network;
 
-        private void Start()
-        {
-            network = Network.singleton;
-        }
-
         public void HostGame()
         {
+            network = Network.singleton;
             network.StartHost();
         }
 
         public void ConnectToGame()
         {
+            network = Network.singleton;
             network.networkAddress = textArea.text;
             network.StartClient();
         }
