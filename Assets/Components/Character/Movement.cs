@@ -16,6 +16,16 @@ namespace Character
             _physics = _character.GetComponent<Physics>();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && _character.isGrounded)
+            {
+                _physics.velocity.y += 15f;
+                Debug.Log("SEEEEX");
+            }
+            
+        }
+
         private void FixedUpdate()
         {
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -24,16 +34,12 @@ namespace Character
             Vector3 moveDirection = (transform.forward * verticalInput) + (transform.right * horizontalInput);
 
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (_character.isGrounded)
-                {
-                    moveDirection.y += 55;
-                }
-            }
 
             if (_physics)
-                _physics.velocity = (moveDirection * moveSpeed) * Time.fixedDeltaTime;
+            {
+                _physics.velocity.x = (moveDirection * moveSpeed).x;
+                _physics.velocity.z = (moveDirection * moveSpeed).z;
+            }
 
         }
 
